@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miner Gun Builder - Invite Code Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Miner Gun Builder - Invite Code Generator</h1>
+    <p>Enter your invite code below to generate a new alliance invite code.</p>
+    <input type="text" id="inviteCode" placeholder="Enter invite code" />
+    <button onclick="generateAndDisplayCode()">Generate Code</button>
+    <div id="result"></div>
+
+    <script>
+        function getEven(f) {
+            var e = [8, 12, 15, 2, 14, 3, 5, 1, 7, 13, 11, 9, 10, 4, 6, 0];
+            return e[parseInt(f, 16)];
+        }
+
+        function getOdd(f) {
+            var o = [15, 7, 3, 5, 13, 6, 14, 8, 0, 11, 12, 10, 1, 9, 4, 2];
+            return o[parseInt(f, 16)];
+        }
+
+        function getRand() {
+            var rand = "";
+            for (var i = 0; i < 32; i++) {
+                var f = Math.floor(Math.random() * 16).toString(16);
+                rand += f;
+            }
+            return rand;
+        }
+
+        function generateCode(invitationCode) {
+            var m = [1, 6, 0, 7, "e", 8, "f", "d", "b", 5, 2, "c", 3, "a", 9, 4];
+            let base = invitationCode.split("").map(function (a) { return m[parseInt(a, 16)]; }).join("");
+            var rand = getRand();
+            var r = rand.split("").reverse();
+            for (var i = 0; i < 32; i++) {
+                var f = r[i];
+                if (i % 2 == 1) {
+                    rand += getEven(f).toString(16);
+                } else {
+                    rand += getOdd(f).toString(16);
+                }
+            }
+            var code = "";
+            for (var i = 0; i < 64; i++) {
+                code += base[i] + rand[i];
+            }
+            return code;
+        }
+
+        function generateAndDisplayCode() {
+            var ic = document.getElementById("inviteCode").value;
+            if (ic) {
+                var generatedCode = generateCode(ic);
+                document.getElementById("result").innerText = "Generated Code: " + generatedCode;
+            } else {
+                document.getElementById("result").innerText = "Please enter a valid invite code.";
+            }
+        }
+    </script>
+</body>
+</html>
