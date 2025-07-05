@@ -3,48 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miner Gun Builder - Invite Code Generator</title>
+    <title>Miner Gun Builder - Auto Invite Code Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            color: #333;
-            text-align: center;
+            margin: 0;
             padding: 20px;
         }
         h1 {
-            color: #4CAF50;
+            color: #333;
         }
         input[type="text"] {
-            padding: 10px;
             width: 300px;
+            padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 5px;
         }
         button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
+            padding: 10px 15px;
+            background-color: #28a745;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #218838;
         }
-        #result {
+        #output {
             margin-top: 20px;
-            font-weight: bold;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <h1>Miner Gun Builder - Invite Code Generator</h1>
-    <p>Enter your invite code below to generate a new alliance invite code.</p>
-    <input type="text" id="inviteCode" placeholder="Enter invite code" />
+
+    <h1>Miner Gun Builder - Auto Invite Code Generator</h1>
+    <label for="inviteCode">Enter your invite code:</label>
+    <input type="text" id="inviteCode" placeholder="e0f135ef961d6d82d35346b9a578d028e6bbee3cc02f020b5d8a8421483597b8">
     <button onclick="generateAndDisplayCode()">Generate Code</button>
-    <div id="result"></div>
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+
+    <div id="output"></div>
 
     <script>
         function getEven(f) {
@@ -88,13 +93,19 @@
 
         function generateAndDisplayCode() {
             var ic = document.getElementById("inviteCode").value;
-            if (ic) {
-                var generatedCode = generateCode(ic);
-                document.getElementById("result").innerText = "Generated Code: " + generatedCode;
-            } else {
-                document.getElementById("result").innerText = "Please enter a valid invite code.";
-            }
+            var generatedCode = generateCode(ic);
+            document.getElementById("output").innerText = "Generated Code: " + generatedCode;
+        }
+
+        function copyToClipboard() {
+            var outputText = document.getElementById("output").innerText.replace("Generated Code: ", "");
+            navigator.clipboard.writeText(outputText).then(function() {
+                alert("Code copied to clipboard!");
+            }, function(err) {
+                console.error("Could not copy text: ", err);
+            });
         }
     </script>
+
 </body>
 </html>
